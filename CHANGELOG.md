@@ -1,3 +1,8 @@
+## 0.1.8 (Cinefly fork)
+
+- Android: `kotlin-android` is now applied conditionally — `if (agpMajor < 9 || !builtInKotlin)` — so the module builds under AGP 9 when the consuming app runs with `android.builtInKotlin=true` (built-in Kotlin), where applying KGP is a hard error. Gating on the AGP major version alone is not enough: Flutter 3.47's own template ships AGP 9 with `builtInKotlin=false`, and that combination still needs KGP applied here. See `FORK.md`.
+- Android: `kotlinOptions { jvmTarget = "17" }` inside `android {}` replaced with a guarded `kotlin { compilerOptions { jvmTarget } }` block outside it — under built-in Kotlin the `kotlin` extension does not exist, and AGP derives the target from `compileOptions.targetCompatibility`.
+
 ## 0.1.7 (Cinefly fork)
 
 Maintenance release for the Cinefly fork — see `FORK.md`.
