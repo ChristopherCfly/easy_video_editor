@@ -1,52 +1,39 @@
+// Cinefly fork of iawtk2302/easy_video_editor (MIT). See FORK.md at the repository root.
+//
+// The legacy `buildscript` block (pinned to AGP 7.3.0 / Kotlin 1.7.10) and the
+// `allprojects` repositories block were removed: when this plugin is consumed as
+// an included subproject, the consuming app's AGP and repositories govern the
+// build. For standalone builds of this directory, the AGP version and
+// repositories come from settings.gradle's pluginManagement block.
+
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
 group = "com.example.easy_video_editor"
 version = "1.0-SNAPSHOT"
 
-buildscript {
-    ext.kotlin_version = "1.7.10"
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.3.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace = "com.example.easy_video_editor"
-    }
+    namespace = "com.example.easy_video_editor"
+    compileSdk = 37
 
-    compileSdk = 35
+    defaultConfig {
+        minSdk = 24
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
         test.java.srcDirs += "src/test/kotlin"
-    }
-
-    defaultConfig {
-        minSdk = 21
     }
 
     dependencies {
@@ -57,12 +44,16 @@ android {
         implementation "androidx.media3:media3-common:1.4.1"
         implementation("androidx.media3:media3-transformer:1.4.1")
         implementation("androidx.media3:media3-muxer:1.4.1")
-        
+
         // Coroutines
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-        implementation ("com.otaliastudios:transcoder:0.10.5")
+        implementation("com.otaliastudios:transcoder:0.10.5")
+    }
+
+    lint {
+        disable 'InvalidPackage'
     }
 
     testOptions {
@@ -70,9 +61,9 @@ android {
             useJUnitPlatform()
 
             testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
             }
         }
     }

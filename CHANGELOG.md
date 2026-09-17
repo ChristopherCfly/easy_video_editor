@@ -1,3 +1,23 @@
+## 0.1.7 (Cinefly fork)
+
+Maintenance release for the Cinefly fork — see `FORK.md`.
+
+- Android module modernised: `plugins {}` DSL with no pinned AGP classpath (the
+  consuming app's AGP governs), `compileSdk` 37, `minSdk` 24, Java 17
+  source/target, `lint` block, unconditional `namespace`; the legacy
+  `buildscript`/`allprojects` blocks were removed and the manifest `package`
+  attribute was dropped in favour of the Gradle namespace.
+- Gradle wrapper bumped 8.10 → 9.7.1 for standalone resolution.
+- iOS SPM manifest aligned with the canonical Flutter plugin template: the
+  `FlutterFramework` path dependency is declared (rewritten by `flutter_tools`
+  at integration) and the deployment target raised to iOS 15.0.
+- Podspec: deployment target 12.0 → 15.0, Swift 5.9, metadata repointed at the
+  fork (kept for CocoaPods consumers).
+- Dart SDK constraint raised `>=3.4.0 <4.0.0` → `>=3.10.0 <4.0.0`; Flutter
+  constraint `>=3.3.0` → `>=3.32.0`.
+- Swift import audit: every source file carries explicit imports (includes the
+  upstream Foundation-import fix for SPM builds).
+
 ## 0.1.6
 
 - Add `getFrame` API to extract raw RGBA8888 video frame pixels on Android and iOS.
